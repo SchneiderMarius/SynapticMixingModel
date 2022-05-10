@@ -3,15 +3,15 @@ clear all
 load(fullfile(cd,'ARparameter'));
 
 %%
-par             = parAR;                                % parameters of the AR(2) model
-par.numTrial    = 500;                                  % number of trials
-par.fsample     = 1000;                                 % sample rate
-par.time        = 20;                                   % time in sec
-par.a           = 2/3;                                  % slope 1/f
+par             = parAR;            % parameters of the AR(2) model
+par.numTrial    = 500;              % number of trials
+par.fsample     = 1000;             % sample rate
+par.time        = 20;               % time in sec
+par.a           = 2/3;              % slope 1/f
 
-func    = {[],'sigmoid'};                               % determines transfer function, empty = liner transfer
-cw      = 0.05;                                       % projection strength
-fac     = 2;                                          % determines SOS (scales with 1/SOS)
+func    = {[],'sigmoid'};           % determines transfer function [ [] = liner transfer]
+cw      = 0.05;                     % projection strength
+fac     = 2;                        % determines SOS (scales with 1/SOS)
 result  = cell(1,length(func));
 
 for cnt1 = 1 : length(func)
@@ -46,4 +46,10 @@ for cnt1 = 1 : length(func)
 end
 
 figure
-plot(result{cnt1}.Freq,result{cnt1}.Coh{1,1})
+hold
+plot(result{1}.Freq,result{1}.Coh{1,1})
+plot(result{2}.Freq,result{2}.Coh{1,1})
+xlabel('frequency')
+ylabel('coherence')
+xlim([0 100])
+legend({'linear transfer','sigmoidal transfer'})
